@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+model User {
+  id          String   @id @default(cuid())
+  username    String   @unique
+  email       String   @unique
+  bio         String?
+  avatarUrl   String?
+  role        UserRole @default(USER)
+
+  reviews     Review[]
+  logs        Log[]
+
+  following   Follow[] @relation("Following")
+  followers   Follow[] @relation("Followers")
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Cigarette {
+  id          String   @id @default(cuid())
+
+  name        String
+  brand       String
+  description String?
+  imageUrl    String?
+  country     String?
+
+  reviews     Review[]
+  logs        Log[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Review {
+  id           String    @id @default(cuid())
+
+  rating       Float
+  content      String
+
+  userId       String
+  cigaretteId  String
+
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cigarette    Cigarette @relation(fields: [cigaretteId], references: [id], onDelete: Cascade)
+
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@unique([userId, cigaretteId])
+}
+
+model Log {
+  id           String    @id @default(cuid())
+
+  notes        String?
+  smokedAt     DateTime
+
+  userId       String
+  cigaretteId  String
+
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cigarette    Cigarette @relation(fields: [cigaretteId], references: [id], onDelete: Cascade)
+
+  createdAt    DateTime  @default(now())
+}
+
+model Follow {
+  followerId   String
+  followingId  String
+
+  follower     User @relation("Followers", fields: [followerId], references: [id], onDelete: Cascade)
+  following    User @relation("Following", fields: [followingId], references: [id], onDelete: Cascade)
+
+  createdAt    DateTime @default(now())
+
+  @@id([followerId, followingId])
+}
