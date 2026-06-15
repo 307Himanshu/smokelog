@@ -9,4 +9,8 @@ export const auth = betterAuth({
   }),
 
   appName: "SmokeLog",
+
+  emailAndPassword: {
+    enabled: true,
+  },
 });
