@@ -1,3 +1,4 @@
+
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -13,25 +14,32 @@ enum UserRole {
 }
 
 model User {
-  id          String   @id @default(cuid())
-  username    String   @unique
-  email       String   @unique
-  bio         String?
-  avatarUrl   String?
-  role        UserRole @default(USER)
+  id        String   @id @default(cuid())
+  username  String?  @unique
+  email     String   @unique
+  bio       String?
+  avatarUrl String?
+  role      UserRole @default(USER)
 
-  reviews     Review[]
-  logs        Log[]
+  reviews Review[]
+  logs    Log[]
 
-  following   Follow[] @relation("Following")
-  followers   Follow[] @relation("Followers")
+  following Follow[] @relation("Following")
+  followers Follow[] @relation("Followers")
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  name          String
+  emailVerified Boolean   @default(false)
+  image         String?
+  sessions      Session[]
+  accounts      Account[]
+
+  @@map("user")
 }
 
 model Cigarette {
-  id          String   @id @default(cuid())
+  id String @id @default(cuid())
 
   name        String
   brand       String
@@ -39,54 +47,102 @@ model Cigarette {
   imageUrl    String?
   country     String?
 
-  reviews     Review[]
-  logs        Log[]
+  reviews Review[]
+  logs    Log[]
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Review {
-  id           String    @id @default(cuid())
+  id String @id @default(cuid())
 
-  rating       Float
-  content      String
+  rating  Float
+  content String
 
-  userId       String
-  cigaretteId  String
+  userId      String
+  cigaretteId String
 
-  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  cigarette    Cigarette @relation(fields: [cigaretteId], references: [id], onDelete: Cascade)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cigarette Cigarette @relation(fields: [cigaretteId], references: [id], onDelete: Cascade)
 
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([userId, cigaretteId])
 }
 
 model Log {
-  id           String    @id @default(cuid())
+  id String @id @default(cuid())
 
-  notes        String?
-  smokedAt     DateTime
+  notes    String?
+  smokedAt DateTime
 
-  userId       String
-  cigaretteId  String
+  userId      String
+  cigaretteId String
 
-  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  cigarette    Cigarette @relation(fields: [cigaretteId], references: [id], onDelete: Cascade)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cigarette Cigarette @relation(fields: [cigaretteId], references: [id], onDelete: Cascade)
 
-  createdAt    DateTime  @default(now())
+  createdAt DateTime @default(now())
 }
 
 model Follow {
-  followerId   String
-  followingId  String
+  followerId  String
+  followingId String
 
-  follower     User @relation("Followers", fields: [followerId], references: [id], onDelete: Cascade)
-  following    User @relation("Following", fields: [followingId], references: [id], onDelete: Cascade)
+  follower  User @relation("Followers", fields: [followerId], references: [id], onDelete: Cascade)
+  following User @relation("Following", fields: [followingId], references: [id], onDelete: Cascade)
 
-  createdAt    DateTime @default(now())
+  createdAt DateTime @default(now())
 
   @@id([followerId, followingId])
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@index([userId])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
 }
