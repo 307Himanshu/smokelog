@@ -18,13 +18,24 @@ export default async function CigaretteDetailPage({
       id,
     },
     include: {
-      reviews: true,
+     reviews: {
+     include: {
+      user: true,
     },
+  },
+},
   });
 
   if (!cigarette) {
     notFound();
   }
+  const averageRating =
+  cigarette.reviews.length === 0
+    ? 0
+    : cigarette.reviews.reduce(
+        (sum, review) => sum + review.rating,
+        0
+      ) / cigarette.reviews.length;
 
   return (
     <main className="min-h-screen bg-zinc-950 text-white">
@@ -40,7 +51,7 @@ export default async function CigaretteDetailPage({
         <div className="mt-8 rounded-lg border border-zinc-800 bg-zinc-900 p-6">
           <p>Brand: {cigarette.brand}</p>
           <p>Country: {cigarette.country ?? "Unknown"}</p>
-          <p>Average Rating: ⭐ 0.0 / 5</p>
+          <p>Average Rating: ⭐ {averageRating.toFixed(1)} / 5</p>
           <p>Reviews: {cigarette.reviews.length}</p>
         </div>
 
@@ -61,9 +72,11 @@ export default async function CigaretteDetailPage({
                   className="rounded-md bg-zinc-800 p-4"
                 >
                   <p className="font-semibold">
-                    Rating: ⭐ {review.rating}
-                  </p>
-
+                  {review.user.name}
+                   </p>
+                  <p className="mt-1">
+                   Rating: ⭐ {review.rating}
+                </p>
                   <p className="mt-2 text-zinc-300">
                     {review.content}
                   </p>
