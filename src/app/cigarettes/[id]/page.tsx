@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { createReview } from "./actions";
 import { notFound } from "next/navigation";
 
 type PageProps = {
@@ -15,6 +16,9 @@ export default async function CigaretteDetailPage({
   const cigarette = await prisma.cigarette.findUnique({
     where: {
       id,
+    },
+    include: {
+      reviews: true,
     },
   });
 
@@ -37,6 +41,7 @@ export default async function CigaretteDetailPage({
           <p>Brand: {cigarette.brand}</p>
           <p>Country: {cigarette.country ?? "Unknown"}</p>
           <p>Average Rating: ⭐ 0.0 / 5</p>
+          <p>Reviews: {cigarette.reviews.length}</p>
         </div>
 
         <div className="mt-8 rounded-lg border border-zinc-800 bg-zinc-900 p-6">
@@ -44,9 +49,28 @@ export default async function CigaretteDetailPage({
             Reviews
           </h2>
 
-          <p className="mt-4 text-zinc-400">
-            No reviews yet.
-          </p>
+          {cigarette.reviews.length === 0 ? (
+            <p className="mt-4 text-zinc-400">
+              No reviews yet.
+            </p>
+          ) : (
+            <div className="mt-4 space-y-4">
+              {cigarette.reviews.map((review) => (
+                <div
+                  key={review.id}
+                  className="rounded-md bg-zinc-800 p-4"
+                >
+                  <p className="font-semibold">
+                    Rating: ⭐ {review.rating}
+                  </p>
+
+                  <p className="mt-2 text-zinc-300">
+                    {review.content}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="mt-8 rounded-lg border border-zinc-800 bg-zinc-900 p-6">
@@ -54,8 +78,12 @@ export default async function CigaretteDetailPage({
             Write a Review
           </h2>
 
-          <div className="mt-4 space-y-4">
+          <form
+            action={createReview.bind(null, cigarette.id)}
+            className="mt-4 space-y-4"
+          >
             <input
+              name="rating"
               type="number"
               min="1"
               max="5"
@@ -64,15 +92,19 @@ export default async function CigaretteDetailPage({
             />
 
             <textarea
+              name="content"
               placeholder="What did you think?"
               rows={5}
               className="w-full rounded-md border border-zinc-700 bg-zinc-800 p-3"
             />
 
-            <button className="rounded-md bg-white px-6 py-3 font-medium text-black">
+            <button
+              type="submit"
+              className="rounded-md bg-white px-6 py-3 font-medium text-black"
+            >
               Submit Review
             </button>
-          </div>
+          </form>
         </div>
       </div>
     </main>
