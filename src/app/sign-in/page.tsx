@@ -9,13 +9,17 @@ export default function SignInPage() {
   const [password, setPassword] = useState("");
 
   async function handleSignIn() {
-    const result = await authClient.signIn.email({
-      email,
-      password,
-    });
+  const result = await authClient.signIn.email({
+    email,
+    password,
+  });
 
-    console.log(result);
+  console.log(result);
+
+  if (result.data) {
+    window.location.href = "/dashboard";
   }
+}
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-zinc-950">
