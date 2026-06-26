@@ -5,8 +5,10 @@ export async function Navbar() {
   const user = await getCurrentUser();
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-zinc-800/80 bg-zinc-950/90 backdrop-blur">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 text-white">
+    <nav className="sticky top-0 z-50 border-b border-zinc-800/80 bg-black/80 backdrop-blur-xl">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
+
+        {/* Left Side */}
         <div className="flex items-center gap-10">
           <Link
             href="/"
@@ -18,50 +20,57 @@ export async function Navbar() {
           <div className="hidden md:flex items-center gap-6 text-sm">
             <Link
               href="/"
-              className="text-zinc-300 hover:text-white"
+              className="text-zinc-400 transition hover:text-white"
             >
               Home
             </Link>
 
             <Link
               href="/cigarettes"
-              className="text-zinc-300 hover:text-white"
+              className="text-zinc-400 transition hover:text-white"
             >
               Cigarettes
             </Link>
 
             <Link
               href="/users"
-              className="text-zinc-300 hover:text-white"
+              className="text-zinc-400 transition hover:text-white"
             >
               People
             </Link>
           </div>
         </div>
+
+        {/* Center Search */}
         <Link
   href="/search"
-  className="text-zinc-300 hover:text-white"
+  className="hidden md:flex items-center rounded-full border border-zinc-800 bg-zinc-900 px-4 py-2 text-sm text-zinc-400 transition hover:text-white"
 >
-  Search
+  🔍 Search
 </Link>
 
-        <div>
+        {/* Right Side */}
+        <div className="flex items-center gap-3">
+
+          
+
           {user ? (
             <Link
               href={`/users/${user.id}`}
-              className="rounded-full border border-zinc-700 px-4 py-2 text-sm hover:border-zinc-500"
+              className="rounded-full border border-zinc-700 px-4 py-2 text-sm transition hover:border-zinc-500"
             >
               {user.name}
             </Link>
           ) : (
             <Link
               href="/sign-in"
-              className="rounded-full border border-zinc-700 px-4 py-2 text-sm hover:border-zinc-500"
+              className="rounded-full border border-zinc-700 px-4 py-2 text-sm transition hover:border-zinc-500"
             >
               Sign In
             </Link>
           )}
         </div>
+
       </div>
     </nav>
   );

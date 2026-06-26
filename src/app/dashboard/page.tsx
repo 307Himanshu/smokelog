@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 
 export default async function DashboardPage() {
@@ -65,19 +66,19 @@ export default async function DashboardPage() {
           </h2>
 
           <div className="flex gap-4">
-            <a
+            <Link
               href="/cigarettes/new"
               className="rounded-lg bg-white px-4 py-2 font-medium text-black"
             >
               Add Cigarette
-            </a>
+            </Link>
 
-            <a
+            <Link
               href="/cigarettes"
               className="rounded-lg border border-zinc-700 px-4 py-2"
             >
               Browse Cigarettes
-            </a>
+            </Link>
           </div>
         </section>
 

@@ -26,7 +26,7 @@ export default function NewCigarettePage() {
           <input
             name="brand"
             type="text"
-            placeholder="Brand"
+            placeholder="Brand (optional)"
             className="w-full rounded-md border border-zinc-700 bg-zinc-900 p-3"
           />
 

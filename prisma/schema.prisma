@@ -42,7 +42,7 @@ model Cigarette {
   id String @id @default(cuid())
 
   name        String
-  brand       String
+  brand       String?
   description String?
   imageUrl    String?
   country     String?

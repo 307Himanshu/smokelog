@@ -28,14 +28,47 @@ cigarette: true,
 
 return ( <main className="relative min-h-screen bg-black text-white">
     <div className="absolute inset-0 -z-10">
-  <div className="absolute left-[-150px] top-[100px] h-[700px] w-[700px] rounded-full bg-amber-500/20 blur-[180px]" />
+  <div
+  className="
+    absolute
+    left-[-80px]
+    top-24
+    h-64
+    w-64
+    md:left-[-150px]
+    md:top-[100px]
+    md:h-[700px]
+    md:w-[700px]
+    rounded-full
+    bg-amber-500/20
+    blur-[120px]
+    md:blur-[180px]
+  "
+/>
 
-  <div className="absolute right-[-100px] top-[50px] h-[600px] w-[600px] rounded-full bg-orange-500/15 blur-[180px]" />
+<div
+  className="
+    absolute
+    top-16
+    right-0
+    h-56
+    w-56
+    md:top-[50px]
+    md:h-[600px]
+    md:w-[600px]
+    translate-x-1/3
+    rounded-full
+    bg-orange-500/15
+    blur-[100px]
+    md:blur-[180px]
+    pointer-events-none
+  "
+/>
 
   <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(245,158,11,0.12),transparent_55%)]" />
 </div>
 
-  <section className="relative mx-auto max-w-7xl px-6 py-28">
+  <section className="relative mx-auto max-w-7xl overflow-hidden px-6 lg:px-8 py-28">
   <div className="relative overflow-hidden rounded-3xl min-h-[800px] md:min-h-[700px]">
  <Image
   src="/images/hero.jpg"
@@ -55,7 +88,7 @@ return ( <main className="relative min-h-screen bg-black text-white">
 
   <div className="relative z-10 flex min-h-[700px] items-start md:items-center px-6 md:px-12 lg:px-24 pt-16 md:pt-0">
     <div className="max-w-3xl">
-      <h1 className="text-5xl font-bold leading-none tracking-tight md:text-7xl lg:text-8xl">
+      <h1 className="text-5xl font-bold leading-none tracking-tight sm:text-6xl lg:text-8xl">
         Track.
         <br />
         Review.
