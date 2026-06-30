@@ -5,36 +5,41 @@ export async function Navbar() {
   const user = await getCurrentUser();
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-zinc-800/80 bg-black/80 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-
+    <nav className="sticky top-0 z-50 border-b border-zinc-800/50 bg-zinc-950/70 backdrop-blur-2xl">
+      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-6 lg:px-8">
         {/* Left Side */}
         <div className="flex items-center gap-10">
           <Link
-            href="/"
-            className="text-xl font-bold tracking-tight"
-          >
-            SmokeLog 🚬
-          </Link>
+  href="/"
+  className="group flex items-center gap-2"
+>
+  <span className="text-2xl transition-transform duration-300 group-hover:-rotate-12">
+    🚬
+  </span>
+
+  <span className="text-2xl font-black tracking-tight">
+    SmokeLog
+  </span>
+</Link>
 
           <div className="hidden md:flex items-center gap-6 text-sm">
             <Link
               href="/"
-              className="text-zinc-400 transition hover:text-white"
+              className="rounded-full px-3 py-2 text-sm font-medium text-zinc-400 transition-all duration-200 hover:bg-zinc-800 hover:text-white"
             >
               Home
             </Link>
 
             <Link
               href="/cigarettes"
-              className="text-zinc-400 transition hover:text-white"
+              className="rounded-full px-3 py-2 text-sm font-medium text-zinc-400 transition-all duration-200 hover:bg-zinc-800 hover:text-white"
             >
               Cigarettes
             </Link>
 
             <Link
               href="/users"
-              className="text-zinc-400 transition hover:text-white"
+              className="rounded-full px-3 py-2 text-sm font-medium text-zinc-400 transition-all duration-200 hover:bg-zinc-800 hover:text-white"
             >
               People
             </Link>

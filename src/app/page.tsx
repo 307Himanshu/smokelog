@@ -26,7 +26,7 @@ cigarette: true,
 },
 });
 
-return ( <main className="relative min-h-screen bg-black text-white">
+return ( <main className="relative min-h-screen overflow-x-hidden bg-black text-white">
     <div className="absolute inset-0 -z-10">
   <div
   className="
@@ -56,7 +56,7 @@ return ( <main className="relative min-h-screen bg-black text-white">
     md:top-[50px]
     md:h-[600px]
     md:w-[600px]
-    translate-x-1/3
+    right-[-80px] md:right-[-120px]
     rounded-full
     bg-orange-500/15
     blur-[100px]
@@ -68,7 +68,7 @@ return ( <main className="relative min-h-screen bg-black text-white">
   <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(245,158,11,0.12),transparent_55%)]" />
 </div>
 
-  <section className="relative mx-auto max-w-7xl overflow-hidden px-6 lg:px-8 py-28">
+  <section className="relative mx-auto w-full max-w-7xl overflow-hidden px-6 py-28">
   <div className="relative overflow-hidden rounded-3xl min-h-[800px] md:min-h-[700px]">
  <Image
   src="/images/hero.jpg"
