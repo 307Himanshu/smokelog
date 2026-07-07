@@ -1,36 +1,197 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚬 SmokeLog
 
-## Getting Started
+> A social platform to discover, rate, review, and track cigarettes.
 
-First, run the development server:
+SmokeLog is a full-stack web application inspired by Letterboxd, built specifically for cigarette enthusiasts. Users can discover cigarettes, write reviews, rate products, follow other users, maintain their smoking history, and explore new brands through a modern social experience.
+
+> ⚠️ This project is currently under active development.
+
+---
+
+## ✨ Features
+
+### Current Features
+
+- ✅ User Authentication
+- ✅ User Profiles
+- ✅ Cigarette Database
+- ✅ Cigarette Detail Pages
+- ✅ Ratings & Reviews
+- ✅ Follow System
+- ✅ Homepage Dashboard
+- ✅ Responsive Hero Section
+- ✅ Search Page (Work in Progress)
+- ✅ Mobile Responsive Layout
+
+---
+
+### Planned Features
+
+- Activity Feed
+- Personalized Dashboard
+- Custom Lists
+- Advanced Search & Filters
+- User Statistics
+- Image Uploads (Cloudinary)
+- Admin Dashboard
+- Notifications
+- Profile Customization
+- Recommendation Engine
+- Dark Theme Improvements
+
+---
+
+# 🛠 Tech Stack
+
+## Frontend
+
+- Next.js 16
+- React
+- TypeScript
+- Tailwind CSS
+- shadcn/ui
+
+## Backend
+
+- Next.js Server Actions
+- Prisma ORM
+- Better Auth
+
+## Database
+
+- PostgreSQL
+
+## Future Services
+
+- Cloudinary
+- Vercel
+- Neon PostgreSQL
+
+---
+
+# 📂 Project Structure
+
+```
+src/
+│
+├── app/
+├── components/
+├── lib/
+├── actions/
+├── hooks/
+├── generated/
+└── types/
+```
+
+---
+
+# 🗄 Database
+
+SmokeLog currently includes models for:
+
+- Users
+- Cigarettes
+- Reviews
+- Logs
+- Follow System
+
+Built using Prisma ORM with PostgreSQL.
+
+---
+
+# 🚀 Running Locally
+
+Clone the repository
+
+```bash
+git clone https://github.com/307Himanshu/smokelog.git
+```
+
+Move into the project
+
+```bash
+cd smokelog
+```
+
+Install dependencies
+
+```bash
+npm install
+```
+
+Configure environment variables
+
+```bash
+cp .env.example .env
+```
+
+Run Prisma
+
+```bash
+npx prisma migrate dev
+```
+
+Start the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# 📅 Development Roadmap
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- [x] Project Setup
+- [x] Authentication
+- [x] Database Design
+- [x] User Profiles
+- [x] Reviews
+- [x] Follow System
+- [x] Responsive Homepage
+- [ ] Search System
+- [ ] Image Uploads
+- [ ] Activity Feed
+- [ ] Statistics Dashboard
+- [ ] Lists
+- [ ] Deployment
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+# 🎯 Project Goals
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+SmokeLog is being developed as a production-ready portfolio project to demonstrate skills in:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Full Stack Development
+- Authentication
+- Database Design
+- Responsive UI
+- Modern React
+- Next.js App Router
+- TypeScript
+- Prisma ORM
+- PostgreSQL
+- Software Architecture
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# 📈 Status
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+🚧 Active Development
+
+New features are being added continuously.
+
+---
+
+# 👨‍💻 Author
+
+**Himanshu Kumar**
+
+GitHub
+
+https://github.com/307Himanshu
+
+---
+
+## ⭐ Support
+
+If you like this project, consider giving it a ⭐ on GitHub.
