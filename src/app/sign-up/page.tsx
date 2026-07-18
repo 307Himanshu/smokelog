@@ -9,19 +9,34 @@ export default function SignUpPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   async function handleSignUp() {
+    if (!name || !email || !password) {
+      setError("Please fill in all fields.");
+      return;
+    }
+
     setLoading(true);
+    setError(null);
 
-    const result = await authClient.signUp.email({
-      name,
-      email,
-      password,
-    });
+    try {
+      const result = await authClient.signUp.email({
+        name,
+        email,
+        password,
+      });
 
-    console.log(result);
-
-    setLoading(false);
+      if (result.data) {
+        window.location.href = "/dashboard";
+      } else if (result.error) {
+        setError(result.error.message || "Failed to create account.");
+      }
+    } catch (err: any) {
+      setError(err?.message || "An unexpected error occurred.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -31,15 +46,21 @@ export default function SignUpPage() {
           Create Account
         </h1>
 
+        {error && (
+          <div className="text-sm font-medium text-red-400 bg-red-950/30 border border-red-900/50 rounded-md p-3">
+            ⚠️ {error}
+          </div>
+        )}
+
         <input
-          className="w-full rounded-md border border-zinc-700 bg-zinc-800 p-3 text-white"
+          className="w-full rounded-md border border-zinc-700 bg-zinc-800 p-3 text-white focus:outline-none focus:border-zinc-500"
           placeholder="Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
 
         <input
-          className="w-full rounded-md border border-zinc-700 bg-zinc-800 p-3 text-white"
+          className="w-full rounded-md border border-zinc-700 bg-zinc-800 p-3 text-white focus:outline-none focus:border-zinc-500"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -47,14 +68,14 @@ export default function SignUpPage() {
 
         <input
           type="password"
-          className="w-full rounded-md border border-zinc-700 bg-zinc-800 p-3 text-white"
+          className="w-full rounded-md border border-zinc-700 bg-zinc-800 p-3 text-white focus:outline-none focus:border-zinc-500"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
 
         <Button
-          className="w-full"
+          className="w-full cursor-pointer"
           onClick={handleSignUp}
           disabled={loading}
         >

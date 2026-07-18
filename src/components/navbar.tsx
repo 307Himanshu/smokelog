@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getCurrentUser } from "@/lib/session";
+import { UserNav } from "@/components/user-nav";
 
 export async function Navbar() {
   const user = await getCurrentUser();
@@ -60,16 +61,11 @@ export async function Navbar() {
           
 
           {user ? (
-            <Link
-              href={`/users/${user.id}`}
-              className="rounded-full border border-zinc-700 px-4 py-2 text-sm transition hover:border-zinc-500"
-            >
-              {user.name}
-            </Link>
+            <UserNav user={user} />
           ) : (
             <Link
               href="/sign-in"
-              className="rounded-full border border-zinc-700 px-4 py-2 text-sm transition hover:border-zinc-500"
+              className="rounded-full border border-zinc-700 px-4 py-2 text-sm transition hover:border-zinc-500 text-white"
             >
               Sign In
             </Link>

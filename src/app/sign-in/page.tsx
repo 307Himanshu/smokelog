@@ -7,19 +7,35 @@ import { Button } from "@/components/ui/button";
 export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   async function handleSignIn() {
-  const result = await authClient.signIn.email({
-    email,
-    password,
-  });
+    if (!email || !password) {
+      setError("Please fill in all fields.");
+      return;
+    }
 
-  console.log(result);
+    setLoading(true);
+    setError(null);
 
-  if (result.data) {
-    window.location.href = "/dashboard";
+    try {
+      const result = await authClient.signIn.email({
+        email,
+        password,
+      });
+
+      if (result.data) {
+        window.location.href = "/dashboard";
+      } else if (result.error) {
+        setError(result.error.message || "Failed to sign in. Please check your credentials.");
+      }
+    } catch (err: any) {
+      setError(err?.message || "An unexpected error occurred.");
+    } finally {
+      setLoading(false);
+    }
   }
-}
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-zinc-950">
@@ -28,8 +44,14 @@ export default function SignInPage() {
           Sign In
         </h1>
 
+        {error && (
+          <div className="text-sm font-medium text-red-400 bg-red-950/30 border border-red-900/50 rounded-md p-3">
+            ⚠️ {error}
+          </div>
+        )}
+
         <input
-          className="w-full rounded-md border border-zinc-700 bg-zinc-800 p-3 text-white"
+          className="w-full rounded-md border border-zinc-700 bg-zinc-800 p-3 text-white focus:outline-none focus:border-zinc-500"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -37,17 +59,18 @@ export default function SignInPage() {
 
         <input
           type="password"
-          className="w-full rounded-md border border-zinc-700 bg-zinc-800 p-3 text-white"
+          className="w-full rounded-md border border-zinc-700 bg-zinc-800 p-3 text-white focus:outline-none focus:border-zinc-500"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
 
         <Button
-          className="w-full"
+          className="w-full cursor-pointer"
           onClick={handleSignIn}
+          disabled={loading}
         >
-          Sign In
+          {loading ? "Signing In..." : "Sign In"}
         </Button>
       </div>
     </main>
